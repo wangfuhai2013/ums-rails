@@ -55,7 +55,7 @@
                         //var result = $.parseJSON(msg);                        
                         if (msg.is_success == "true") {
                           $.cookie("login_name",$("#login_name").val(),{expires:15,path:"/"});
-                          parent.document.location.href = "/spread/tasks"; 
+                          parent.document.location.href = "/cms"; 
                         }
                         if (msg.is_success == "false") {
                           $("#notice").text(msg.message);

@@ -37,7 +37,7 @@ $ rake db:seed
 ```
 
 ## 使用
-配置访问检查检查,可在 app/controllers/application_controller.rb中加入
+配置访问权限检查功能,可在 app/controllers/application_controller.rb中加入
 ```ruby
   helper Ums::Engine.helpers
   include Ums::ApplicationHelper
