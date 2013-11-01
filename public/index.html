@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>管理后台</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link  href="/css/bootstrap.min.css" media="all" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.min.js"></script>
+
+</head>
+<body >
+
+  <div class="container">
+  <div style="text-align: center;">
+    <h3>管理后台</h3>
+     <form  action="#" method="POST" onsubmit="return false;">
+
+     <div id="notice" style="text-align: center; color: red; font-size:16px;"></div>
+       <input type="text" id="login_name" class="input-large" placeholder="请输入用户名">
+       <input type="password"  id="password" class="input-large" placeholder="请输入密码">
+      <!----
+      <label class="checkbox">
+      <input type="checkbox"> 记住我
+    </label>
+        -->    
+      <input id="login_btn" type="submit" class="btn btn-primary"  value="登录">
+      </div>
+    </form>
+  </div>
+ </div>
+
+  <script type="text/javascript">
+
+    $().ready(function () {
+        if($.cookie("login_name")){
+          $("#login_name").val($.cookie("login_name"));
+          $('#password').focus();
+        }else{
+          $('#login_name').focus();
+        }
+        $('#login_btn').click(function () {
+            if ($('#login_name').val() == "" || $('#password').val() == "") {
+                $("#notice").text("用户名或密码不能为空")
+                if ($('#password').val() == "") $('#password').focus();
+                if ($('#login_name').val() == "") $('#login_name').focus();
+            }else {
+                $.ajax({
+                    type: "POST",
+                    url: "/ums/users/login.json",
+                    data: "login_name=" + escape($('#login_name').val()) + "&password=" + escape($('#password').val()),
+                    success: function (msg) {
+                        //alert(msg.message)
+                        //var result = $.parseJSON(msg);                        
+                        if (msg.is_success == "true") {
+                          $.cookie("login_name",$("#login_name").val(),{expires:15,path:"/"});
+                          parent.document.location.href = "/spread/tasks"; 
+                        }
+                        if (msg.is_success == "false") {
+                          $("#notice").text(msg.message);
+                          $('#password').val("");
+                          $('#password').focus();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, thrownError) {
+                      alert(textStatus+","+thrownError)
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
