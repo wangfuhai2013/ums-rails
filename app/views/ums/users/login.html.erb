@@ -1,0 +1,22 @@
+<% if flash[:notice] || flash[:error]  %>
+<div class="alert <%= "alert-success" if flash[:notice] %> <%= "alert-error" if flash[:error] %>">
+  <a class="close" data-dismiss="alert">×</a>
+  <%= flash[:notice] %><%= flash[:error] %>
+</div>
+<% end %>
+<%= form_tag do %>
+	<fieldset>
+		<legend>请登录</legend>
+        <div>
+        	<label for="login_name">账号:</label>
+        	<%= text_field_tag :login_name,params[:login_name] %>
+        </div>
+        <div>
+        	<label for="password">密码:</label>
+        	<%= password_field_tag :password,params[:password] %>        	
+        </div>
+        <div>
+                <%= submit_tag "登录" ,:class => "btn btn-primary" %>
+        </div>
+	</fieldset>
+<% end %>

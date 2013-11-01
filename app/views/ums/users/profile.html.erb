@@ -1,0 +1,30 @@
+<h1>修改资料</h1>
+<% if flash[:notice] || flash[:error]  %>
+<div class="alert <%= "alert-success" if flash[:notice] %> <%= "alert-danger" if flash[:error] %>">
+  <a class="close" data-dismiss="alert">×</a>
+  <%= flash[:notice] %><%= flash[:error] %>
+</div>
+<% end %>
+
+<%= form_for(@ums_user,:url => ums.users_profile_path) do |f| %>
+  <% if @ums_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ums_user.errors.count, "error") %> prohibited this ums_user from being saved:</h2>
+
+      <ul>
+      <% @ums_user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email ,'邮箱'%>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit ' 保存 ',:class => 'btn btn-primary'%>
+  </div>
+<% end %>

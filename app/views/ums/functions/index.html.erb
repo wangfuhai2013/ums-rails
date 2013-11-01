@@ -1,0 +1,33 @@
+<h1>功能列表
+  <small><%= link_to '新建功能', ums.new_function_path ,:class => "btn btn-primary" %></small>
+</h1>
+<% if flash[:notice] || flash[:error]  %>
+<div class="alert <%= "alert-success" if flash[:notice] %> <%= "alert-danger" if flash[:error] %>">
+  <a class="close" data-dismiss="alert">×</a>
+  <%= flash[:notice] %><%= flash[:error] %>
+</div>
+<% end %>
+<table class="table table-striped table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th>功能名称</th>
+      <th>模块名称</th>
+      <th>操作名称</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ums_functions.each do |ums_function| %>
+      <tr>
+        <td><%= ums_function.name %></td>
+        <td><%= ums_function.controller %></td>
+        <td><%= ums_function.action %></td>
+        <td><%= link_to '修改', ums.edit_function_path(ums_function) %></td>
+        <td><%= link_to '删除', ums_function, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,2 @@
+module Ums::LogsHelper
+end

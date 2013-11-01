@@ -1,0 +1,36 @@
+<h1>角色列表
+  <small><%= link_to '新建角色', ums.new_role_path ,:class => "btn btn-primary" %></small>
+</h1>
+<% if flash[:notice] || flash[:error]  %>
+<div class="alert <%= "alert-success" if flash[:notice] %> <%= "alert-danger" if flash[:error] %>">
+  <a class="close" data-dismiss="alert">×</a>
+  <%= flash[:notice] %><%= flash[:error] %>
+</div>
+<% end %>
+<table class="table table-striped table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th>角色名称</th>
+      <th>相关功能</th>
+      <th></th>      
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ums_roles.each do |ums_role| %>
+      <tr>
+        <td><%= ums_role.name %></td>
+        <td>
+          <% ums_role.functions.each_with_index do | function,index |
+             concat function.name
+             concat "," if index + 1 < ums_role.functions.length
+          end
+          %>
+        </td>
+        <td><%= link_to '修改', ums.edit_role_path(ums_role) %></td>
+        <td><%= link_to '删除', ums_role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,32 @@
+<%= form_for(@ums_role) do |f| %>
+  <% if @ums_role.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ums_role.errors.count, "error") %> prohibited this ums_role from being saved:</h2>
+
+      <ul>
+      <% @ums_role.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+    <div class="field">
+    <%= f.label :functions ,'相关功能'%>
+      <% @ums_functions.each do |function| %>
+      <div>
+        <%= check_box_tag "role[function_ids][]", function.id, @ums_role.functions.include?(function) %>
+        <%= function.name %>
+      </div>
+      <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit ' 保存 ',:class => 'btn btn-primary'%>
+    &nbsp;&nbsp;
+    <%= link_to ' 返回 ', ums.roles_path,:class => "btn btn-default" %>
+  </div>
+<% end %>
