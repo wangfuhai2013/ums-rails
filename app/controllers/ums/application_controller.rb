@@ -1,5 +1,4 @@
 module Ums
-  #class ApplicationController < ActionController::Base
-  class Ums::ApplicationController < ApplicationController
+  class ApplicationController < ActionController::Base
   end
 end
