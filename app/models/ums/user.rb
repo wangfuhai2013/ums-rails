@@ -1,7 +1,7 @@
 class Ums::User < ActiveRecord::Base
   belongs_to :role
 
-  validates_presence_of :name,:role,:email
+  validates_presence_of :name,:role
   validates_uniqueness_of :name
 
   validate :password_non_blank

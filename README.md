@@ -37,6 +37,10 @@ $ rake db:seed
 ```
 
 ## 使用
+设置应用路由，在 config/routes.rb中加入
+```ruby
+mount Ums::Engine =>'/ums'
+```
 配置访问权限检查功能,可在 app/controllers/application_controller.rb中加入
 ```ruby
   helper Ums::Engine.helpers
