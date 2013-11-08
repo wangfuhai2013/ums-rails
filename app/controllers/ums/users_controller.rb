@@ -22,7 +22,7 @@ class Ums::UsersController < ApplicationController
         
         session[:last_login_time] = user.last_login_time
         session[:last_login_ip] = user.last_login_ip
-        session[:login_count] = user.login_count
+        session[:login_count] = login_count
 
         user.last_login_time = Time.now
         user.last_login_ip = request.remote_ip
