@@ -1,7 +1,7 @@
 class Ums::UsersController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  skip_before_filter :authorize, :only => [:welcome,:login,:logout,:profile,:password]
+  skip_before_filter :authorize, :only => [:login,:logout]
 
   before_action :set_ums_user, only: [:show, :edit, :update, :destroy]
   before_action :set_ums_roles, only: [:new,:edit,:update,:create]
@@ -36,7 +36,7 @@ class Ums::UsersController < ApplicationController
         session[:original_uri] = nil
         log_info("login",params[:login_name] + " login success",request.remote_ip)
 
-        user_permission = '^redactor_rails|' # 上传组件
+        user_permission = '^redactor_rails|welcome|profile|password|' # 上传组件和用户基础操作默认许可
         user.role.functions.each do |function| 
           if function.action.blank?
             user_permission += '^' + function.controller
@@ -69,7 +69,9 @@ class Ums::UsersController < ApplicationController
   def logout
     session[:user_id] = nil
     session[:user_name] = nil
-
+    session[:last_login_time] = nil
+    session[:last_login_ip] = nil
+    session[:login_count] = nil
     #flash[:notice] = "已退出"
     redirect_to  '/' #main_index_path
   end

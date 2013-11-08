@@ -12,7 +12,7 @@ module Ums
 
       path = params[:controller] + "/" + params[:action]
       unless validate_permission(path)
-         render status: :forbidden, text: "访问被拒绝"
+         render status: :forbidden, text: "对不起，您没有访问该地址的权限"
       end    
    end
 
