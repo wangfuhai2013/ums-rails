@@ -1,0 +1,10 @@
+
+	<fieldset>
+		<legend>欢迎您的登录</legend>
+        <div>
+        	这是您第<%= session[:login_count]%>次登录.
+            <% if session[:login_count] > 1 %>
+            您上次登录时间是: <%= session[:last_login_time].strftime('%Y-%m-%d %H:%M') %>，登录IP为: <%= session[:last_login_ip]%>
+            <% end %>
+        </div>
+	</fieldset>

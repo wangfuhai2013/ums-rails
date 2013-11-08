@@ -35,6 +35,7 @@ Ums::Engine.load_seed
 ```sh
 $ rake db:seed
 ```
+初始化账号为`admin`,密码`admin`
 
 ## 使用
 设置应用路由，在 config/routes.rb中加入

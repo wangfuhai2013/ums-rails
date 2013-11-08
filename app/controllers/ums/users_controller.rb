@@ -1,14 +1,17 @@
 class Ums::UsersController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  skip_before_filter :authorize, :only => [:login,:logout,:profile,:password]
+  skip_before_filter :authorize, :only => [:welcome,:login,:logout,:profile,:password]
 
   before_action :set_ums_user, only: [:show, :edit, :update, :destroy]
   before_action :set_ums_roles, only: [:new,:edit,:update,:create]
   # GET /ums/users
   # GET /ums/users.json
 
- def login
+  def welcome    
+  end
+
+  def login
     if request.post?
       #account = Account.authenticate(params[:login_name],params[:password])
       user = Ums::User.authenticate(params[:login_name],params[:password])
@@ -16,6 +19,11 @@ class Ums::UsersController < ApplicationController
         login_count = user.login_count      
         login_count = 0 if login_count.nil?
         login_count += 1
+        
+        session[:last_login_time] = user.last_login_time
+        session[:last_login_ip] = user.last_login_ip
+        session[:login_count] = user.login_count
+
         user.last_login_time = Time.now
         user.last_login_ip = request.remote_ip
         user.login_count = login_count
