@@ -29,7 +29,7 @@ class Ums::RolesController < ApplicationController
 
     respond_to do |format|
       if @ums_role.save
-        format.html { redirect_to ums.roles_url, notice: 'Role was successfully created.' }
+        format.html { redirect_to ums.roles_url, notice: '角色创建成功.' }
         format.json { render action: 'show', status: :created, location: @ums_role }
       else
         format.html { render action: 'new' }
@@ -43,7 +43,7 @@ class Ums::RolesController < ApplicationController
   def update
     respond_to do |format|
       if @ums_role.update(ums_role_params)
-        format.html { redirect_to ums.roles_url, notice: 'Role was successfully updated.' }
+        format.html { redirect_to ums.roles_url, notice: '角色修改成功.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -61,7 +61,7 @@ class Ums::RolesController < ApplicationController
       @ums_role.destroy
     end
     respond_to do |format|
-      format.html { redirect_to ums.roles_url }
+      format.html { redirect_to ums.roles_url , notice: '角色删除成功.'}
       format.json { head :no_content }
     end
   end

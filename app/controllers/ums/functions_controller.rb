@@ -28,7 +28,7 @@ class Ums::FunctionsController < ApplicationController
 
     respond_to do |format|
       if @ums_function.save
-        format.html { redirect_to ums.functions_url, notice: 'Function was successfully created.' }
+        format.html { redirect_to ums.functions_url, notice: '功能创建创建成功.' }
         format.json { render action: 'show', status: :created, location: @ums_function }
       else
         format.html { render action: 'new' }
@@ -42,7 +42,7 @@ class Ums::FunctionsController < ApplicationController
   def update
     respond_to do |format|
       if @ums_function.update(ums_function_params)
-        format.html { redirect_to ums.functions_url, notice: 'Function was successfully updated.' }
+        format.html { redirect_to ums.functions_url, notice: '功能修改成功' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -56,7 +56,7 @@ class Ums::FunctionsController < ApplicationController
   def destroy
     @ums_function.destroy
     respond_to do |format|
-      format.html { redirect_to ums.functions_url }
+      format.html { redirect_to ums.functions_url , notice: '功能删除成功.'}
       format.json { head :no_content }
     end
   end

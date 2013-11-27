@@ -51,7 +51,7 @@ class Ums::UsersController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to  uri || main_index_path }
-          format.json { render json: {is_success:"true",message:""} }
+          format.json { render json: {is_success:"true",message:"登录成功",user_id:user.id} }
         end
 
       else
@@ -137,7 +137,7 @@ class Ums::UsersController < ApplicationController
 
     respond_to do |format|
       if @ums_user.save
-        format.html { redirect_to ums.users_url, notice: 'User was successfully created.' }
+        format.html { redirect_to ums.users_url, notice: '用户创建成功.' }
         format.json { render action: 'show', status: :created, location: @ums_user }
       else
         format.html { render action: 'new' }
@@ -151,7 +151,7 @@ class Ums::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @ums_user.update(ums_user_params)
-        format.html { redirect_to ums.users_url, notice: 'User was successfully updated.' }
+        format.html { redirect_to ums.users_url, notice: '用户修改成功.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -165,7 +165,7 @@ class Ums::UsersController < ApplicationController
   def destroy
     @ums_user.destroy
     respond_to do |format|
-      format.html { redirect_to ums.users_url }
+      format.html { redirect_to ums.users_url, notice: '用户删除成功.' }
       format.json { head :no_content }
     end
   end
