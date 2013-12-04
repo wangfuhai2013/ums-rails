@@ -38,6 +38,12 @@ class Ums::User < ActiveRecord::Base
 		create_salt
 		self.hashed_password = Ums::User.encrypted_password(pwd,self.salt)
 	end
+  
+  def as_json options=nil
+    options ||= {}
+    options[:except] = [:hashed_password,:salt]
+    super options
+  end
 
 	private
 	def password_non_blank

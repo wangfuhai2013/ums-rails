@@ -51,7 +51,7 @@ class Ums::UsersController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to  uri || main_index_path }
-          format.json { render json: {is_success:"true",message:"登录成功",user_id:user.id} }
+          format.json { render json: {is_success:"true",message:"登录成功",user:user} }
         end
 
       else
