@@ -1,16 +1,17 @@
 class Ums::User < ActiveRecord::Base
   belongs_to :role
 
-  validates_presence_of :name,:role
-  validates_uniqueness_of :name
+  validates_presence_of :account,:role
+  validates_uniqueness_of :account,:name
 
   validate :password_non_blank
 
 
-    def self.authenticate(name,password)
-    	user = self.find_by_name(name)
+    def self.authenticate(account,password)
+    	user = self.find_by_account(account)
     	if user
       	expected_password = encrypted_password(password,user.salt)
+        #logger.debug("user.hashed_password:" + user.hashed_password + ",expected_password:" + expected_password)
       	if user.hashed_password != expected_password || !user.is_enabled
       		user = nil    		
       	end

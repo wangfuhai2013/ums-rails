@@ -18,7 +18,7 @@
      <form  action="#" method="POST" onsubmit="return false;">
 
      <div id="notice" style="text-align: center; color: red; font-size:16px;"></div>
-       <input type="text" id="login_name" class="input-large" placeholder="请输入用户名">
+       <input type="text" id="account" class="input-large" placeholder="请输入账号">
        <input type="password"  id="password" class="input-large" placeholder="请输入密码">
       <!----
       <label class="checkbox">
@@ -34,27 +34,27 @@
   <script type="text/javascript">
 
     $().ready(function () {
-        if($.cookie("login_name")){
-          $("#login_name").val($.cookie("login_name"));
+        if($.cookie("account")){
+          $("#account").val($.cookie("account"));
           $('#password').focus();
         }else{
-          $('#login_name').focus();
+          $('#account').focus();
         }
         $('#login_btn').click(function () {
-            if ($('#login_name').val() == "" || $('#password').val() == "") {
+            if ($('#account').val() == "" || $('#password').val() == "") {
                 $("#notice").text("用户名或密码不能为空")
                 if ($('#password').val() == "") $('#password').focus();
-                if ($('#login_name').val() == "") $('#login_name').focus();
+                if ($('#account').val() == "") $('#account').focus();
             }else {
                 $.ajax({
                     type: "POST",
                     url: "/ums/users/login.json",
-                    data: "login_name=" + escape($('#login_name').val()) + "&password=" + escape($('#password').val()),
+                    data: "account=" + escape($('#account').val()) + "&password=" + escape($('#password').val()),
                     success: function (msg) {
                         //alert(msg.message)
                         //var result = $.parseJSON(msg);                        
                         if (msg.is_success == "true") {
-                          $.cookie("login_name",$("#login_name").val(),{expires:15,path:"/"});
+                          $.cookie("account",$("#account").val(),{expires:15,path:"/"});
                           parent.document.location.href = "/ums"; 
                         }
                         if (msg.is_success == "false") {

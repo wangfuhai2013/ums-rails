@@ -12,10 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name ,'用户名'%>
+    <%= f.label :account ,'账号'%>
+    <%= f.text_field :account %>
+  </div>
+  <div class="field">
+    <%= f.label :name ,'姓名'%>
     <%= f.text_field :name %>
   </div>
-
   <div class="field">
     <%= f.label :password ,"密码" %>
     <%= f.text_field :password %>

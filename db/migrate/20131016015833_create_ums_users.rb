@@ -1,6 +1,7 @@
 class CreateUmsUsers < ActiveRecord::Migration
   def change
     create_table :ums_users do |t|
+      t.string :account
       t.string :name
       t.string :email
       t.string :hashed_password

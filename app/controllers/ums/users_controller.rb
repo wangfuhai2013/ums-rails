@@ -13,8 +13,7 @@ class Ums::UsersController < ApplicationController
 
   def login
     if request.post?
-      #account = Account.authenticate(params[:login_name],params[:password])
-      user = Ums::User.authenticate(params[:login_name],params[:password])
+      user = Ums::User.authenticate(params[:account],params[:password])
       if user 
         login_count = user.login_count      
         login_count = 0 if login_count.nil?
@@ -30,11 +29,12 @@ class Ums::UsersController < ApplicationController
         user.save(validate: false)
 
         session[:user_id] = user.id
+        session[:user_account] = user.account
         session[:user_name] = user.name
 
         uri = session[:original_uri]
         session[:original_uri] = nil
-        log_info("login",params[:login_name] + " login success",request.remote_ip)
+        log_info("login",params[:account] + " login success",request.remote_ip)
 
         user_permission = '^redactor_rails|welcome|profile|password|' # 上传组件和用户基础操作默认许可
         user.role.functions.each do |function| 
@@ -55,7 +55,7 @@ class Ums::UsersController < ApplicationController
         end
 
       else
-        log_error("login",params[:login_name] + " login failed",request.remote_ip)
+        log_error("login",params[:account] + " login failed",request.remote_ip)
         respond_to do |format|
           error_info = "无效的账号或密码"
           format.html { flash.now[:notice] = error_info }
@@ -68,6 +68,7 @@ class Ums::UsersController < ApplicationController
 
   def logout
     session[:user_id] = nil
+    session[:user_account] = nil
     session[:user_name] = nil
     session[:last_login_time] = nil
     session[:last_login_ip] = nil
@@ -178,7 +179,7 @@ class Ums::UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ums_user_params
-      params.require(:user).permit(:name, :email, :password, :role_id, :is_enabled)
+      params.require(:user).permit(:account, :name,:email, :password, :role_id, :is_enabled)
     end
 
     def set_ums_roles
