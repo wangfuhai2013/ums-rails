@@ -50,7 +50,7 @@ class Ums::UsersController < ApplicationController
         session[:user_permission] = user_permission
 
         respond_to do |format|
-          format.html { redirect_to  uri || main_index_path }
+          format.html { redirect_to  uri || root_path }
           format.json { render json: {is_success:"true",message:"登录成功",user:user} }
         end
 
@@ -74,7 +74,7 @@ class Ums::UsersController < ApplicationController
     session[:last_login_ip] = nil
     session[:login_count] = nil
     #flash[:notice] = "已退出"
-    redirect_to  '/' #main_index_path
+    redirect_to  '/' 
   end
 
   def password
