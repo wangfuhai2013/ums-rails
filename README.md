@@ -46,7 +46,10 @@ mount Ums::Engine =>'/ums'
 ```ruby
   helper Ums::Engine.helpers
   include Ums::ApplicationHelper
+  
   before_filter :authorize
+  before_action :set_current_session
+  after_action :operate_log
 ```
 配置登录后的菜单，可在 app/views/layouts/appliction.html.erb中加入
 ```ruby

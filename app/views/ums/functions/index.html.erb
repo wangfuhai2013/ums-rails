@@ -13,6 +13,9 @@
       <th>功能名称</th>
       <th>模块名称</th>
       <th>操作名称</th>
+      <th>创建人</th>
+      <th>修改人</th>            
+      <th>修改时间</th>           
       <th></th>
       <th></th>
     </tr>
@@ -24,8 +27,11 @@
         <td><%= ums_function.name %></td>
         <td><%= ums_function.controller %></td>
         <td><%= ums_function.action %></td>
+        <td><%= ums_function.created_by.account if ums_function.created_by %></td>   
+        <td><%= ums_function.updated_by.account if ums_function.updated_by %></td>   
+        <td><%= ums_function.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td>              
         <td><%= link_to '修改', ums.edit_function_path(ums_function) %></td>
-        <td><%= link_to '删除', ums_function, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '删除', ums_function, method: :delete, data: { confirm: '您确定要删除?' } %></td>
       </tr>
     <% end %>
   </tbody>

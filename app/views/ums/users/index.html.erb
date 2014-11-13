@@ -18,6 +18,9 @@
       <th>登录次数</th>
       <th>角色</th>
       <th>是否可用</th>
+      <th>创建人</th>
+      <th>修改人</th>            
+      <th>修改时间</th>          
       <th></th>
       <th></th>
     </tr>
@@ -36,8 +39,11 @@
         <td><span class="label <%= ums_user.is_enabled ? 'label-success' : 'label-default' %>">
              <%= ums_user.is_enabled ? '是' : '否' %>
           </span></td>
+        <td><%= ums_user.created_by.account if ums_user.created_by %></td>   
+        <td><%= ums_user.updated_by.account if ums_user.updated_by %></td>     
+        <td><%= ums_user.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td>            
         <td><%= link_to '修改', ums.edit_user_path(ums_user) %></td>
-        <td><%= link_to '删除', ums_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '删除', ums_user, method: :delete, data: { confirm: '您确定要删除?' } %></td>
       </tr>
     <% end %>
   </tbody>

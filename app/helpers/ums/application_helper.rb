@@ -1,6 +1,44 @@
 module Ums
   module ApplicationHelper
 
+    #为ActiveRecord类设置session变量
+    def set_current_session
+      # Define an accessor. The session is always in the current controller
+      # instance in @_request.session. So we need a way to access this in
+      # our model
+      accessor = instance_variable_get(:@_request)
+
+      # This defines a method session in ActiveRecord::Base. If your model
+      # inherits from another Base Class (when using MongoMapper or similar),
+      # insert the class here.
+      ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
+    end
+
+    #操作日志，主要针对model的增删改
+    def operate_log    
+       log = Ums::Log.new
+       log.level="info"
+       log.log_type= action_name
+       log.ip= request.remote_ip       
+       log.operator = session[:user_account] unless session[:user_account].blank?
+       model_name = self.class.name.sub("Controller", "")
+       #logger.debug("model_name:"+ model_name)
+       log.model_name = model_name
+       model_var_name = model_name.singularize.sub("::", "_").downcase
+       model_var = instance_variable_get("@"+model_var_name)
+       if model_var && model_var.kind_of?(ActiveRecord::Base)
+         log.model_id = model_var.id
+         log.data = model_var.name if model_var.has_attribute?(:name)
+         log.data = model_var.title if model_var.has_attribute?(:title)
+         if !model_var.errors.blank?
+           log.level="error" 
+           log.data += model_var.errors.full_messages.to_s
+         end
+       end
+       log.save
+    end
+
+    #用户访问权限检查
     def authorize
       #unless Account.find_by_id(session[:account_id])
       if session[:user_id].nil?
@@ -16,6 +54,7 @@ module Ums
       end    
     end
     
+    #根据访问路径判断访问权限
     def validate_permission(path)
       permission = session[:user_permission]
 
@@ -25,21 +64,25 @@ module Ums
       return path.match(permission)
     end
 
-    def log_info(log_type,log_content,log_ip)
+    #记录信息日志
+    def log_info(log_type,log_content)
       log = Ums::Log.new
       log.level="info"
       log.log_type=log_type
       log.data=log_content
-      log.ip=log_ip
+      log.ip=request.remote_ip
+      log.operator_id = session[:user_id] unless session[:user_id].blank?
       log.save
     end
 
-    def log_error(log_type,log_content,log_ip)
+    #记录错误日志
+    def log_error(log_type,log_content)
       log = Ums::Log.new
       log.level="error"
       log.log_type=log_type
       log.data=log_content
-      log.ip=log_ip
+      log.ip=request.remote_ip
+      log.operator_id = session[:user_id] unless session[:user_id].blank?
       log.save
     end
 

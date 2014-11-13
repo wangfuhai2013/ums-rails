@@ -34,7 +34,7 @@ class Ums::UsersController < ApplicationController
 
         uri = session[:original_uri]
         session[:original_uri] = nil
-        log_info("login",params[:account] + " login success",request.remote_ip)
+        log_info("login",params[:account] + "登录成功")
 
         user_permission = '^redactor_rails|welcome|profile|password|' # 上传组件和用户基础操作默认许可
         user.role.functions.each do |function| 
@@ -55,7 +55,7 @@ class Ums::UsersController < ApplicationController
         end
 
       else
-        log_error("login",params[:account] + " login failed",request.remote_ip)
+        log_error("login",params[:account] + "登录失败")
         respond_to do |format|
           error_info = "无效的账号或密码"
           format.html { flash.now[:notice] = error_info }
@@ -67,6 +67,7 @@ class Ums::UsersController < ApplicationController
   end
 
   def logout
+    log_info("logout",session[:user_account].to_s + "退出登录")
     session[:user_id] = nil
     session[:user_account] = nil
     session[:user_name] = nil
