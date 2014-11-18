@@ -71,7 +71,7 @@ module Ums
       log.log_type=log_type
       log.data=log_content
       log.ip=request.remote_ip
-      log.operator_id = session[:user_id] unless session[:user_id].blank?
+      log.operator = session[:user_account] unless session[:user_account].blank?
       log.save
     end
 
@@ -82,7 +82,7 @@ module Ums
       log.log_type=log_type
       log.data=log_content
       log.ip=request.remote_ip
-      log.operator_id = session[:user_id] unless session[:user_id].blank?
+      log.operator = session[:user_account] unless session[:user_account].blank?
       log.save
     end
 
