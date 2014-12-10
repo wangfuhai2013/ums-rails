@@ -12,7 +12,8 @@ class Ums::Function < ActiveRecord::Base
 
     #记录操作人员
     def record_operator
-      if session[:user_id]
+
+      if self.respond_to?(:session) && session[:user_id]
         self.created_by_id = session[:user_id] if new_record?
         self.updated_by_id = session[:user_id]
       end
