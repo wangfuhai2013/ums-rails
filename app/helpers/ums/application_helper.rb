@@ -61,7 +61,9 @@ module Ums
       logger.debug("user_permission:" + permission) unless permission.nil?
       logger.debug("user_path:" + path) unless path.nil?
       return false if permission.nil? || path.nil?
-      return path.match(permission)
+      is_validated = path.match(permission)
+      is_validated = (path + "/index").match(permission) unless is_validated #增加模块默认地址检测
+      return is_validated
     end
 
     #记录信息日志
