@@ -61,8 +61,7 @@ class Ums::User < ActiveRecord::Base
 
 	private
 	def password_non_blank
-		errors.add(:password,"missing password") if hashed_password.blank?
-		
+		errors.add(:password,"missing password") if hashed_password.blank?		
 	end
 	def self.encrypted_password(password,slat)
 		Digest::SHA1.hexdigest(password+slat)

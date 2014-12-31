@@ -95,11 +95,14 @@ class Ums::UsersController < ApplicationController
       user = Ums::User.find_by_id(session[:user_id])
       if user.verify_password(params[:old_password])
         user.password=params[:new_password]
-        user.save
-        flash.now[:notice] = "密码修改成功"
-        params.delete(:new_password)
-        params.delete(:old_password)
-        params.delete(:re_password)
+        if user.save
+          flash.now[:notice] = "密码修改成功"
+          params.delete(:new_password)
+          params.delete(:old_password)
+          params.delete(:re_password)
+        else
+          flash.now[:error] = user.errors.full_messages.to_s
+        end
       else 
         flash.now[:error] = "旧密码输入错误"
       end  

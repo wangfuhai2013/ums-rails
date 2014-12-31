@@ -21,13 +21,14 @@ module Ums
        log.log_type= action_name
        log.ip= request.remote_ip       
        log.operator = session[:user_account] unless session[:user_account].blank?
-       model_name = self.class.name.sub("Controller", "")
-       #logger.debug("model_name:"+ model_name)
-       log.model_name = model_name
-       model_var_name = model_name.singularize.sub("::", "_").downcase
+       model_class = self.class.name.sub("Controller", "")
+       #logger.debug("model_class:"+ model_class)
+       log.model_class = model_class
+       model_var_name = model_class.singularize.sub("::", "_").downcase
        model_var = instance_variable_get("@"+model_var_name)
        if model_var && model_var.kind_of?(ActiveRecord::Base)
          log.model_id = model_var.id
+         log.data = ""
          log.data = model_var.name if model_var.has_attribute?(:name)
          log.data = model_var.title if model_var.has_attribute?(:title)
          if !model_var.errors.blank?

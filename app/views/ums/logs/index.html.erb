@@ -41,8 +41,8 @@
       <tr>
         <td><%= ums_log.level_name %></td>        
         <td><%= ums_log.log_type_name %></td>
-        <td><%= ums_log.model_name + "(" +  ums_log.model_id.to_s + ")" +
-                                  ":" unless ums_log.model_name.blank? %>
+        <td><%= ums_log.model_class + "(" +  ums_log.model_id.to_s + ")" +
+                                  ":" unless ums_log.model_class.blank? %>
             <%= ums_log.data %></td>        
         <td><%= ums_log.operator %></td> 
         <td><%= ums_log.ip %></td> 
