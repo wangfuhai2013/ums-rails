@@ -59,8 +59,8 @@ module Ums
     def validate_permission(path)
       permission = session[:user_permission]
 
-      logger.debug("user_permission:" + permission) unless permission.nil?
-      logger.debug("user_path:" + path) unless path.nil?
+      #logger.debug("user_permission:" + permission.to_s)
+      #logger.debug("user_path:" + path.to_s)
       return false if permission.nil? || path.nil?
       is_validated = path.match(permission)
       is_validated = (path + "/index").match(permission) unless is_validated #增加模块默认地址检测

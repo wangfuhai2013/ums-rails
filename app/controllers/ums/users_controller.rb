@@ -75,7 +75,7 @@ class Ums::UsersController < ApplicationController
     session[:last_login_ip] = nil
     session[:login_count] = nil
     #flash[:notice] = "已退出"
-    redirect_to  '/' 
+    redirect_to  root_path 
   end
 
   def password
