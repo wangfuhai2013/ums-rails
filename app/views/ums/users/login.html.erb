@@ -1,3 +1,5 @@
+<%= javascript_include_tag "ums/application" %>
+
 <% if flash[:notice] || flash[:error]  %>
 <div class="alert <%= "alert-success" if flash[:notice] %> <%= "alert-error" if flash[:error] %>">
   <a class="close" data-dismiss="alert">×</a>
@@ -16,7 +18,28 @@
         	<%= password_field_tag :password,params[:password] %>        	
         </div>
         <div>
-                <%= submit_tag "登录" ,:class => "btn btn-primary" %>
+                <%= submit_tag "登录" ,:class => "btn btn-primary" ,:onclick => "return validate_form();"%>
         </div>
 	</fieldset>
 <% end %>
+ <script type="text/javascript">
+function validate_form (){
+    var account = $("#account").val();
+    var password = $("#password").val();
+    if (account == "") {
+        alert("请输入账号");
+        $("#account").focus();
+        return false;
+    };
+    if (password == "") {
+        alert("输入密码");
+        $("#password").focus();
+        return false;
+    };
+
+    password = CryptoJS.SHA256(account +  CryptoJS.SHA256(password)).toString(CryptoJS.enc.Hex);
+    $("#password").val(password);
+
+    return true;
+}
+</script>

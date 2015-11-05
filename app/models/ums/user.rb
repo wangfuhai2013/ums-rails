@@ -63,8 +63,8 @@ class Ums::User < ActiveRecord::Base
 	def password_non_blank
 		errors.add(:password,"missing password") if hashed_password.blank?		
 	end
-	def self.encrypted_password(password,slat)
-		Digest::SHA1.hexdigest(password+slat)
+	def self.encrypted_password(password,slat)		
+    Digest::SHA2.hexdigest(password.to_s + slat.to_s)    
 	end
 	def create_salt
 	    self.salt =  rand.to_s

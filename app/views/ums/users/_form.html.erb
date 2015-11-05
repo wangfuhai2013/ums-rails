@@ -1,3 +1,4 @@
+<%= javascript_include_tag "ums/application" %>
 <%= form_for(@ums_user) do |f| %>
   <% if @ums_user.errors.any? %>
     <div id="error_explanation">
@@ -36,9 +37,26 @@
     <%= f.check_box :is_enabled %>
   </div>
   <div class="actions">
-    <%= f.submit ' 保存 ',:class => 'btn btn-primary',data: { disable_with: '正在保存...' }%>
+    <%= f.submit ' 保存 ',:class => 'btn btn-primary',data: { disable_with: '正在保存...' } ,:onclick => "return validate_form();"%>
     &nbsp;&nbsp;
     <%= link_to ' 返回 ', ums.users_path,:class => "btn btn-default" %>
   </div>
 <% end %>
 
+ <script type="text/javascript">
+function validate_form (){
+    var account = $("#user_account").val();
+    var password = $("#user_password").val();
+    if (account == "") {
+        alert("请输入账号");
+        $("#user_account").focus();
+        return false;
+    };
+    if (password != "") {
+       password = CryptoJS.SHA256(account +  CryptoJS.SHA256(password)).toString(CryptoJS.enc.Hex);
+       $("#user_password").val(password);
+    };
+
+    return true;
+}
+</script>

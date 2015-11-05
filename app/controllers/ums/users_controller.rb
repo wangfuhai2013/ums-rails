@@ -92,7 +92,7 @@ class Ums::UsersController < ApplicationController
         flash.now[:error] = "新密码不能为空"
         return
       end
-      user = Ums::User.find_by_id(session[:user_id])
+      user = Ums::User.find_by_id(session[:user_id])      
       if user.verify_password(params[:old_password])
         user.password=params[:new_password]
         if user.save
