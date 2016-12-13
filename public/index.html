@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,9 +6,9 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link  href="/css/bootstrap.min.css" media="all" rel="stylesheet" />
-<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/js/sha256.min.js"></script>
 
 </head>
 <body >
@@ -18,7 +19,7 @@
      <form  action="#" method="POST" onsubmit="return false;">
 
      <div id="notice" style="text-align: center; color: red; font-size:16px;"></div>
-       <input type="text" id="account" class="input-large" placeholder="请输入账号">
+       <input type="text" id="account" class="input-large" placeholder="请输入用户名">
        <input type="password"  id="password" class="input-large" placeholder="请输入密码">
       <!----
       <label class="checkbox">
@@ -46,13 +47,15 @@
                 if ($('#password').val() == "") $('#password').focus();
                 if ($('#account').val() == "") $('#account').focus();
             }else {
+                var password = CryptoJS.SHA256($('#account').val() +  CryptoJS.SHA256($('#password').val())).toString(CryptoJS.enc.Hex);
                 $.ajax({
                     type: "POST",
                     url: "/ums/users/login.json",
-                    data: "account=" + escape($('#account').val()) + "&password=" + escape($('#password').val()),
+                    data: "account=" + escape($('#account').val()) + "&password=" + escape(password),
                     success: function (msg) {
                         //alert(msg.message)
-                        //var result = $.parseJSON(msg);                        
+                        //var result = $.parseJSON(msg);  
+                        //alert(result)             
                         if (msg.is_success == "true") {
                           $.cookie("account",$("#account").val(),{expires:15,path:"/"});
                           parent.document.location.href = "/ums"; 

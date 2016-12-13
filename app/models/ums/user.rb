@@ -9,8 +9,7 @@ class Ums::User < ActiveRecord::Base
   belongs_to :created_by, class_name: "Ums::User"
   belongs_to :updated_by, class_name: "Ums::User"
 
-  before_create :record_operator
-  before_update :record_operator
+  before_validation :record_operator
 
     #记录操作人员
     def record_operator
