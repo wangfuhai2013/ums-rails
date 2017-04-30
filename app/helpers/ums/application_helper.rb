@@ -29,8 +29,8 @@ module Ums
        if model_var && model_var.kind_of?(ActiveRecord::Base)
          log.model_id = model_var.id
          log.data = ""
-         log.data = model_var.name if model_var.has_attribute?(:name)
-         log.data = model_var.title if model_var.has_attribute?(:title)
+         log.data = model_var.name if model_var.has_attribute?(:name) && model_var.name
+         log.data = model_var.title if model_var.has_attribute?(:title) && model_var.title
          if !model_var.errors.blank?
            log.level="error" 
            log.data += model_var.errors.full_messages.to_s

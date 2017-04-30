@@ -1,7 +1,7 @@
 class Ums::UsersController < ApplicationController
 
-  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  skip_before_filter :authorize, :only => [:login,:logout]
+  skip_before_action :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
+  skip_before_action :authorize, :only => [:login,:logout]
 
   before_action :set_ums_user, only: [:show, :edit, :update, :destroy]
   before_action :set_ums_roles, only: [:new,:edit,:update,:create]
