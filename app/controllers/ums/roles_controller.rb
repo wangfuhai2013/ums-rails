@@ -32,7 +32,7 @@ class Ums::RolesController < ApplicationController
         format.html { redirect_to ums.roles_url, notice: '角色创建成功.' }
         format.json { render action: 'show', status: :created, location: @ums_role }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new' , status: :unprocessable_entity}
         format.json { render json: @ums_role.errors, status: :unprocessable_entity }
       end
     end
@@ -46,7 +46,7 @@ class Ums::RolesController < ApplicationController
         format.html { redirect_to ums.roles_url, notice: '角色修改成功.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'edit' , status: :unprocessable_entity}
         format.json { render json: @ums_role.errors, status: :unprocessable_entity }
       end
     end

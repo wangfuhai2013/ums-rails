@@ -145,7 +145,7 @@ class Ums::UsersController < ApplicationController
         format.html { redirect_to ums.users_url, notice: '用户创建成功.' }
         format.json { render action: 'show', status: :created, location: @ums_user }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new' , status: :unprocessable_entity }
         format.json { render json: @ums_user.errors, status: :unprocessable_entity }
       end
     end
@@ -159,7 +159,7 @@ class Ums::UsersController < ApplicationController
         format.html { redirect_to ums.users_url, notice: '用户修改成功.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'edit', status: :unprocessable_entity  }
         format.json { render json: @ums_user.errors, status: :unprocessable_entity }
       end
     end

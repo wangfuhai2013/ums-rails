@@ -51,7 +51,7 @@ module Ums
 
       path = params[:controller] + "/" + params[:action]
       unless validate_permission(path)
-         render status: :forbidden, text: "对不起，您没有访问该地址的权限"
+         render status: :forbidden,plain: "对不起，您没有访问该地址的权限"
       end    
     end
     
@@ -59,11 +59,12 @@ module Ums
     def validate_permission(path)
       permission = session[:user_permission]
 
-      #logger.debug("user_permission:" + permission.to_s)
-      #logger.debug("user_path:" + path.to_s)
+      logger.debug("user_permission:" + permission.to_s)
+      logger.debug("user_path:" + path.to_s)
       return false if permission.nil? || path.nil?
       is_validated = path.match(permission)
       is_validated = (path + "/index").match(permission) unless is_validated #增加模块默认地址检测
+
       return is_validated
     end
 

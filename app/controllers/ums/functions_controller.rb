@@ -31,7 +31,7 @@ class Ums::FunctionsController < ApplicationController
         format.html { redirect_to ums.functions_url, notice: '功能创建创建成功.' }
         format.json { render action: 'show', status: :created, location: @ums_function }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new' , status: :unprocessable_entity}
         format.json { render json: @ums_function.errors, status: :unprocessable_entity }
       end
     end
@@ -45,7 +45,7 @@ class Ums::FunctionsController < ApplicationController
         format.html { redirect_to ums.functions_url, notice: '功能修改成功' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'edit' , status: :unprocessable_entity}
         format.json { render json: @ums_function.errors, status: :unprocessable_entity }
       end
     end
