@@ -105,18 +105,20 @@ class Ums::UsersController < ApplicationController
         end
       else 
         flash.now[:error] = "旧密码输入错误"
-      end  
+      end
+      render status: :unprocessable_entity   
     end
   end
 
   def profile
     @ums_user = Ums::User.find_by_id(session[:user_id])
     if request.patch?
-     if @ums_user.update(params.require(:user).permit(:email))
-       flash.now[:notice] = "资料修改成功"
-     else
-       flash.now[:error] = "资料修改失败"
-     end
+       if @ums_user.update(params.require(:user).permit(:email))
+         flash.now[:notice] = "资料修改成功"
+       else
+         flash.now[:error] = "资料修改失败"       
+       end
+       render status: :unprocessable_entity 
     end
   end
 
