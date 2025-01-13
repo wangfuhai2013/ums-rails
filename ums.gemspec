@@ -12,14 +12,13 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/wangfuhai2013/ums-rails"
   s.summary     = "user manage system with rails"
   s.description = "user manage system with rails"
-
+  s.license       = "MIT"  
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE","Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", ">= 4.0.0"
   s.add_dependency "will_paginate", "~> 3.0"
 
-  s.add_dependency "utils", ">= 1.0.0"
-  
+
   s.add_development_dependency "sqlite3"
 end
